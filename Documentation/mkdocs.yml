@@ -1,0 +1,43 @@
+site_name: Windows 10 or Windows Server Image Management w/ MDT and Ansible
+theme:
+  name: material
+  logo: assets/bmt.png
+  favicon: assets/bmt.png
+  palette:
+    scheme: slate
+    primary: teal
+  features:
+    - content.code.annotate
+plugins:
+markdown_extensions:
+  - abbr
+  - attr_list
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true 
+  - codehilite:
+      guess_lang: false
+      use_pygments: true
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - admonition
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+extra:
+  generator: false
+  social: 
+    - icon: fontawesome/brands/github
+      link: https://github.com/bmtltd
+extra_css:
+  - stylesheets/extra.css
+copyright: 
+  <small>Documentation provided by</small><br /><br />
+  <img src="/assets/bmt-logo-small-white.png" />
+  <p>
+  PO Box 2056,<br />
+  Grand Cayman KY1-1105<br />
+  Cayman Islands<br />
+  <a href="https://www.bmt.ky">https://www.bmt.ky</a>
+  </p>

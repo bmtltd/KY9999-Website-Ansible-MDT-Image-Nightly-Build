@@ -1,6 +1,6 @@
 # Welcome
 
-This area is for technical staff that have the ability to install Microsoft Deployment Toolkit, provision new virtual machines within VMware, etc. If you got here from my blog post, you should share the blog post with your technical staff so that they have background information on why I’ve created this tutorial.
+This area is for technical staff that have the ability to install Microsoft Deployment Toolkit, provision new virtual machines within VMware, etc. If you got here from [my blog post](https://blog.bmt.ky/automated-windows-image-building-with-red-hat-ansible/), you should share the blog post with your technical staff so that they have background information on why I’ve created this tutorial.
 
 ## Before you begin
 

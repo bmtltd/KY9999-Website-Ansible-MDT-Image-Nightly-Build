@@ -1,0 +1,15 @@
+
+
+  a.bmt-btn-github
+  {
+      background-color: rgb(2, 23, 21) !important;
+      border-color:#fff !important;
+    border-width: 1px !important;
+  }
+
+  a.bmt-btn-github:hover
+  {
+    background-color: rgb(4, 40, 37) !important;
+    border-color:#fff !important;
+    border-width: 1px !important;
+  }

@@ -1,0 +1,769 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../assets/bmt.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+    
+    
+      
+        <title>Configure MDT and Ansible - Windows 10 or Windows Server Image Management w/ MDT and Ansible</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.472b142f.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.08040f6c.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#009485">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#configure-mdt-and-ansible" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Windows 10 or Windows Server Image Management w/ MDT and Ansible" class="md-header__button md-logo" aria-label="Windows 10 or Windows Server Image Management w/ MDT and Ansible" data-md-component="logo">
+      
+  <img src="../assets/bmt.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Windows 10 or Windows Server Image Management w/ MDT and Ansible
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Configure MDT and Ansible
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Windows 10 or Windows Server Image Management w/ MDT and Ansible" class="md-nav__button md-logo" aria-label="Windows 10 or Windows Server Image Management w/ MDT and Ansible" data-md-component="logo">
+      
+  <img src="../assets/bmt.png" alt="logo">
+
+    </a>
+    Windows 10 or Windows Server Image Management w/ MDT and Ansible
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Welcome
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Configure MDT and Ansible
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Configure MDT and Ansible
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-by-step" class="md-nav__link">
+    Step by Step
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    Summary
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#having-problems" class="md-nav__link">
+    Having problems?
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-by-step" class="md-nav__link">
+    Step by Step
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    Summary
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#having-problems" class="md-nav__link">
+    Having problems?
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="configure-mdt-and-ansible">Configure MDT and Ansible</h1>
+<h2 id="introduction">Introduction</h2>
+<p>For Windows 10 or Windows Server 2016/2019/2022, the process is exactly the same. We’re starting this process assuming you already have a sever with MDT installed. In this tutorial the MDT server name is <strong>MDT01</strong> (that exact name is not required). We are going to configure a CAPTURE for Windows 10, with a image file named <code>W10.wim</code>. You can change to <code>W11.wim</code>, <code>W19.wim</code> or <code>W22.wim</code> depending on whatever OS you’re capturing.</p>
+<p>I have been pretty detailed with my instructions, so don't feel overwhelmed by the number of steps. This whole process will take you less than 30 minutes.</p>
+<h2 id="step-by-step">Step by Step</h2>
+<p>The steps below once for each operating system you’re capturing. After that, you’ll never need to do this again:</p>
+<ol>
+<li>
+<p>Within VMware, create a new Virtual Machine with VMware’s suggested minimum specifications for your Operating System. We will call this machine <strong>WIN10TEMPL</strong>. Take note of the MAC Address associated with this VM. It’s important in subsequent steps.</p>
+</li>
+<li>
+<p>Change the <strong>Disk Mode</strong> of <strong>Hard Disk 1</strong> to type <strong>Independent - Nonpersistent</strong>. This will tell VMware ESXi to automatically reset the hard drive back to its original state each time the machine is powered off.</p>
+</li>
+<li>
+<p>Pull the <strong>install.wim</strong> file from your Windows installation media (or if you have an existing WIM file, you can use that instead). Rename it to <code>W10.wim</code>.</p>
+</li>
+<li>
+<p>On <strong>MDT01</strong>, open the Microsoft Deployment Toolkit &gt; Deployment Workbench application. Under <strong>Operating Systems</strong>, click <strong>Import Operating System</strong> &gt; <strong>Custom image file</strong> &gt; <strong>Setup files are not needed</strong>. </p>
+</li>
+<li>
+<p>Delete all of the additional operating systems that came within W10.wim until you’re left with the only OS you want to capture (e.g. Windows 10 Pro for Workstations). Then, rename the remaining image to <code>W10.wim</code> for ease of reference.</p>
+</li>
+<li>
+<p>Under Task Sequences create a New Task Sequence using <code>CAPTURE_W10</code> as the <strong>Task Sequence ID</strong> and <code>Deploy, Update &amp; Capture Windows 10</code> as the <strong>Task Sequence name</strong> using the <strong>Standard Client Task Sequence</strong> task sequence template. <em>The remaining options in the wizard are of no consequence to Ansible, so choose whatever options are best suited for your environment. I would suggest you use a standard administrator password, however, for reasons I will outline in a future blog post</em>.</p>
+</li>
+<li>
+<p>Once the task sequence is created, double-click it and go to the <strong>Task Sequence</strong> tab. </p>
+</li>
+<li>
+<p>Enable the <strong>State Restore</strong> &gt; <strong>Windows Update (Pre-Application Installation)</strong> step.</p>
+</li>
+<li>
+<p>Enable the <strong>State Restore</strong> &gt; <strong>Windows Update (Post-Application Installation)</strong> step.</p>
+</li>
+<li>
+<p>Underneath <strong>Windows Update (Post-Application Installation)</strong> add a <strong>Restart computer</strong> step.</p>
+</li>
+<li>
+<p>Some Windows Updates have prerequisites that must be installed in a prior reboot. So using right-click and <strong>Copy</strong>, repeat the <strong>Windows Update (Post-Application Installation)</strong> and <strong>Restart computer</strong> steps several times. When you’re done, your Task Sequence should look something like this:</p>
+<p><img alt="Screenshot" src="../assets/MDT_TaskSequence.jpg" /></p>
+</li>
+<li>
+<p>Click <strong>Apply</strong> and <strong>OK</strong>. Then, right click on <strong>MDT Deployment Share</strong> and select <strong>Properties</strong> &gt; <strong>Rules</strong> (tab).</p>
+</li>
+<li>
+<p>Under <code>[Settings]</code> change Priority to what’s below which tells LiteTouch to prioritise rules by MACAddress over the Default rules:
+<div class="highlight"><pre><span></span><code>Priority=MACAddress, Default
+</code></pre></div></p>
+</li>
+<li>
+<p>Now we’re going to create a Rule for the MAC Address associated with <strong>WIN10TEMPL</strong>. Replace <code>00:00:00:00:00:00</code> with the VMs real MAC address:
+<div class="highlight"><pre><span></span><code>[00:00:00:00:00:00]
+SkipTaskSequence=YES
+TaskSequenceID=CAPTURE_W10
+FinishAction=SHUTDOWN
+_SMSTSORGNAME=Windows 10 Deploy and Capture
+BackupFile=W10.wim
+DoCapture=YES
+SkipCapture=YES
+ComputerBackupLocation=%DeployRoot%\Captures
+SkipComputerName=YES
+SkipDomainMembership=YES
+SkipUserData=YES
+SkipLocaleSelection=YES
+SkipTimeZone=YES
+SkipApplications=YES
+SkipBitLocker=YES
+SkipSummary=YES
+SkipRoles=YES
+SkipFinalSummary=YES
+</code></pre></div></p>
+</li>
+<li>
+<p>By default MDT wants you to authenticate before you can access the Deployment Share. We don’t want a username/password screen to show for these capture only virtual machines. So, we’re going to define a rule in the Bootstrap.ini using the MAC Address, saying “when this machine connects to MDT, use this default Windows Active Directory account” (e.g. domain\mdt_capture). This account does not need to be a domain administrator - in fact, I don’t recommend you use a Domain Administrator.</p>
+<p>Click Edit Bootstrap.ini and add the following:
+<div class="highlight"><pre><span></span><code>[Settings]
+Priority=MACAddress,Default
+
+[Default]
+DeployRoot=\\MDT01\DeploymentShare$
+
+[00:50:56:97:46:b2]
+SkipBDDWelcome=YES
+UserID=mdt_capture
+UserPassword=A_COMPLICATED_PASSWORD
+UserDomain=YOUR_FQDN
+</code></pre></div></p>
+</li>
+<li>
+<p>Click <strong>Apply</strong> and <strong>OK</strong>. Then, right-click <strong>MDT Deployment Share</strong> and choose <strong>Update Deployment Share</strong> (use the default settings), which may recreate the LiteTouch ISOs.</p>
+</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The steps above need to be done once for each Golden Image you want to create. The rest of the steps below are only done once, at initial configuration. </p>
+</div>
+<p>By default, when you launch a machine with the LiteTouch ISO, you need to “Press any key to continue”. Because this is a hand-free process, let’s remove that prompt:</p>
+<ol>
+<li>
+<p>Copy the <code>LiteTouchPE_x64.iso</code> MDT created (located under folder <em>/path/to/DeploymentShare/Boot/</em>).</p>
+</li>
+<li>
+<p>In a dedicated folder anywhere on the MDT server, put the <code>LiteTouchPE_x64.iso</code> and the following PowerShell Script:
+<div class="highlight"><pre><span></span><code><span class="c"># The script is removing the prompt &quot;Press any key to boot from CD/DVD&quot; message, allowing fully unattended OSD</span>
+<span class="c"># Example usage: .\Create-Unattended-ISO.ps1 -SourceISOPath &quot;C:\temp\OSD.ISO&quot; -UnattendedISOPath &quot;C:\temp\Unattended.ISO&quot;</span>
+<span class="c">##############################</span>
+<span class="k">Param</span> <span class="p">(</span>
+<span class="p">[</span><span class="k">Parameter</span><span class="p">(</span><span class="k">Mandatory</span><span class="p">=</span><span class="nv">$true</span><span class="p">)]</span>
+<span class="p">[</span><span class="n">ValidateScript</span><span class="p">({</span><span class="nb">Test-Path</span> <span class="nv">$_</span> <span class="n">-PathType</span> <span class="n">Leaf</span><span class="p">})]</span>
+<span class="no">[String]</span>
+<span class="nv">$SourceISOPath</span><span class="p">,</span> <span class="c"># Path to the source ISO file; can be relative</span>
+<span class="p">[</span><span class="k">Parameter</span><span class="p">(</span><span class="k">Mandatory</span><span class="p">=</span><span class="nv">$false</span><span class="p">)]</span>
+<span class="no">[String]</span>
+<span class="nv">$UnattendedISOPath</span> <span class="p">=</span> <span class="s1">&#39;.\Unattended.ISO&#39;</span> <span class="c"># Path to the destination ISO file; can be relative</span>
+
+<span class="p">)</span>
+
+<span class="c"># First we make sure that ADK 10 is installed on the local computer and we get its location</span>
+<span class="nv">$ADKProduct</span> <span class="p">=</span> <span class="nv">$null</span>
+<span class="nv">$ADKProduct</span> <span class="p">=</span> <span class="nb">Get-WmiObject</span> <span class="n">-Class</span> <span class="n">Win32_Product</span> <span class="p">|</span> <span class="nb">Where </span><span class="p">{</span><span class="nv">$_</span><span class="p">.</span><span class="n">Name</span> <span class="o">-eq</span> <span class="s2">&quot;Windows Deployment Tools&quot;</span><span class="p">}</span>
+<span class="k">if</span> <span class="p">(</span><span class="nv">$ADKProduct</span> <span class="o">-ne</span> <span class="nv">$null</span><span class="p">)</span> <span class="p">{</span>
+<span class="c"># Now getting the installation folder; we should have a registry key</span>
+<span class="k">if</span> <span class="p">(!(</span><span class="nb">Test-Path</span> <span class="n">-Path</span> <span class="s2">&quot;HKLM:\Software\WOW6432Node\Microsoft\Windows Kits\Installed Roots&quot;</span><span class="p">))</span> <span class="p">{</span>
+<span class="nb">Write-Host</span> <span class="n">-ForegroundColor</span> <span class="n">Yellow</span> <span class="s2">&quot;The ADK 10 application has been detected on the current computer, but the installation folder not. Aborting...&quot;</span>
+<span class="n">exit</span>
+<span class="p">}</span>
+<span class="k">else</span> <span class="p">{</span>
+<span class="c"># actual installation folder detection</span>
+<span class="nv">$Props</span> <span class="p">=</span> <span class="nb">Get-ItemProperty</span> <span class="n">-Path</span> <span class="s2">&quot;HKLM:\Software\WOW6432Node\Microsoft\Windows Kits\Installed Roots&quot;</span>
+<span class="nv">$ADKPath</span> <span class="p">=</span> <span class="nv">$Props</span><span class="p">.</span><span class="n">KitsRoot10</span>
+<span class="nb">Write-Host</span> <span class="n">-ForegroundColor</span> <span class="n">Green</span> <span class="s2">&quot;The ADK 10 application has been detected on the current computer.&quot;</span>
+<span class="p">}</span>
+<span class="p">}</span>
+<span class="k">else</span> <span class="p">{</span>
+<span class="nb">Write-Host</span> <span class="n">-ForegroundColor</span> <span class="n">Yellow</span> <span class="s2">&quot;The ADK 10 application is not detected as installed on the current computer. Aborting...&quot;</span>
+<span class="n">exit</span>
+<span class="p">}</span>
+
+<span class="c"># Then we create the parent folder of the output file, if it does not exist</span>
+<span class="k">if</span> <span class="p">(!(</span><span class="nb">Test-Path</span> <span class="n">-Path</span> <span class="p">(</span><span class="nb">Split-Path</span> <span class="n">-Path</span> <span class="nv">$UnattendedISOPath</span> <span class="n">-Parent</span><span class="p">)))</span> <span class="p">{</span>
+<span class="nv">$NewLocation</span> <span class="p">=</span> <span class="nb">New-Item</span> <span class="n">-Path</span> <span class="p">(</span><span class="nb">Split-Path</span> <span class="n">-Path</span> <span class="nv">$UnattendedISOPath</span> <span class="n">-Parent</span><span class="p">)</span> <span class="n">-ItemType</span> <span class="n">Directory</span> <span class="n">-Force</span>
+<span class="nb">Write-Host</span> <span class="n">-ForegroundColor</span> <span class="n">Green</span> <span class="s2">&quot;The parent folder of the output ISO file, </span><span class="p">$(</span><span class="nv">$NewLocation</span><span class="p">.</span><span class="n">FullName</span><span class="p">)</span><span class="s2"> has been created.&quot;</span>
+<span class="p">}</span>
+
+<span class="c"># Then we start processing the source ISO file</span>
+<span class="nv">$SourceISOFullPath</span> <span class="p">=</span> <span class="p">(</span><span class="nb">Get-Item</span> <span class="n">-Path</span> <span class="nv">$SourceISOPath</span><span class="p">).</span><span class="n">FullName</span>
+<span class="k">try</span> <span class="p">{</span>
+<span class="nb">Mount-DiskImage</span> <span class="n">-ImagePath</span> <span class="nv">$SourceISOFullPath</span>
+<span class="p">}</span>
+<span class="k">catch</span> <span class="p">{</span>
+<span class="nb">Write-Host</span> <span class="n">-ForegroundColor</span> <span class="n">Yellow</span> <span class="s1">&#39;An error occured while mounting the source ISO file. It may be corrupt. Aborting...&#39;</span>
+<span class="n">exit</span>
+<span class="p">}</span>
+<span class="nv">$iSOImage</span> <span class="p">=</span> <span class="nb">Get-DiskImage</span> <span class="n">-ImagePath</span> <span class="nv">$SourceISOFullPath</span> <span class="p">|</span> <span class="nb">Get-Volume</span>
+<span class="nv">$iSODrive</span> <span class="p">=</span> <span class="s2">&quot;</span><span class="p">$(</span><span class="no">[string]</span><span class="nv">$iSOImage</span><span class="p">.</span><span class="n">DriveLetter</span><span class="p">)</span><span class="s2">:&quot;</span>
+
+<span class="c"># Test if we have enough memory on the current Windows drive to perform the operation (twice the size of the IS0)</span>
+<span class="nv">$ISOItem</span> <span class="p">=</span> <span class="nb">Get-Item</span> <span class="n">-Path</span> <span class="nv">$SourceISOFullPath</span>
+<span class="nv">$SystemDrive</span> <span class="p">=</span> <span class="nb">Get-WmiObject</span> <span class="n">Win32_LogicalDisk</span> <span class="n">-filter</span> <span class="s2">&quot;deviceid=&quot;&quot;$env:SystemDrive&quot;&quot;&quot;</span>
+
+<span class="k">if</span> <span class="p">((</span><span class="nv">$ISOItem</span><span class="p">.</span><span class="n">Length</span> <span class="p">*</span> <span class="n">2</span><span class="p">)</span> <span class="o">-le</span> <span class="nv">$SystemDrive</span><span class="p">.</span><span class="n">FreeSpace</span><span class="p">)</span> <span class="p">{</span>
+<span class="nb">Write-Host</span> <span class="n">-ForegroundColor</span> <span class="n">Green</span> <span class="s2">&quot;The current system drive appears to have enough free space for the ISO conversion process.&quot;</span>
+<span class="p">}</span>
+<span class="k">else</span> <span class="p">{</span>
+<span class="nb">Write-Host</span> <span class="n">-ForegroundColor</span> <span class="n">Yellow</span> <span class="s2">&quot;The current system drive does not appear to have enough free space for the ISO conversion process. Aborting...&quot;</span>
+<span class="n">exit</span>
+<span class="p">}</span>
+
+<span class="c"># Process the ISO content using a temporary folder on the local system drive</span>
+<span class="k">if</span> <span class="p">(!(</span><span class="nb">Test-Path</span> <span class="n">-Path</span> <span class="s2">&quot;$env:TEMP\sourceisotemp&quot;</span> <span class="n">-PathType</span> <span class="n">Container</span><span class="p">))</span> <span class="p">{</span>
+<span class="nb">New-Item</span> <span class="n">-Path</span> <span class="s2">&quot;$env:TEMP\sourceisotemp&quot;</span> <span class="n">-ItemType</span> <span class="n">Directory</span> <span class="n">-Force</span> <span class="p">|</span> <span class="nb">Out-Null</span>
+<span class="p">}</span>
+<span class="k">else</span> <span class="p">{</span>
+<span class="nb">Remove-Item</span> <span class="n">-Path</span> <span class="s2">&quot;$env:TEMP\sourceisotemp&quot;</span> <span class="n">-Force</span> <span class="n">-Confirm</span><span class="p">:</span><span class="nv">$false</span>
+<span class="nb">New-Item</span> <span class="n">-Path</span> <span class="s2">&quot;$env:TEMP\sourceisotemp&quot;</span> <span class="n">-ItemType</span> <span class="n">Directory</span> <span class="n">-Force</span> <span class="p">|</span> <span class="nb">Out-Null</span>
+<span class="p">}</span>
+
+<span class="nb">Write-Host</span> <span class="n">-ForegroundColor</span> <span class="n">Green</span> <span class="s2">&quot;Extracting the content of the ISO file.&quot;</span>
+<span class="nb">Get-ChildItem</span> <span class="n">-Path</span> <span class="nv">$iSODrive</span> <span class="p">|</span> <span class="nb">Copy-Item</span> <span class="n">-Destination</span> <span class="s2">&quot;$env:TEMP\sourceisotemp&quot;</span> <span class="n">-Recurse</span> <span class="n">-Container</span> <span class="n">-Force</span>
+<span class="nb">Write-Host</span> <span class="n">-ForegroundColor</span> <span class="n">Green</span> <span class="s2">&quot;The content of the ISO file has been extracted.&quot;</span>
+
+<span class="c"># Processing the extracted content</span>
+<span class="k">if</span> <span class="p">(</span><span class="nb">Test-Path</span> <span class="n">-Path</span> <span class="s2">&quot;$env:TEMP\sourceisotemp\boot\bootfix.bin&quot;</span> <span class="n">-PathType</span> <span class="n">Leaf</span><span class="p">)</span> <span class="p">{</span>
+<span class="nb">Remove-Item</span> <span class="n">-Path</span> <span class="s2">&quot;$env:TEMP\sourceisotemp\boot\bootfix.bin&quot;</span> <span class="n">-Force</span> <span class="n">-Confirm</span><span class="p">:</span><span class="nv">$false</span>
+<span class="p">}</span>
+<span class="nv">$oscdimg</span> <span class="p">=</span> <span class="nv">$ADKPath</span> <span class="p">+</span> <span class="s2">&quot;Assessment and Deployment Kit\Deployment Tools\amd64\Oscdimg\oscdimg.exe&quot;</span>
+<span class="nv">$etfsboot</span> <span class="p">=</span> <span class="nv">$ADKPath</span> <span class="p">+</span> <span class="s2">&quot;Assessment and Deployment Kit\Deployment Tools\amd64\Oscdimg\etfsboot.com&quot;</span>
+<span class="nv">$efisys_noprompt</span> <span class="p">=</span> <span class="nv">$ADKPath</span> <span class="p">+</span> <span class="s2">&quot;Assessment and Deployment Kit\Deployment Tools\amd64\Oscdimg\efisys_noprompt.bin&quot;</span>
+<span class="nv">$parameters</span> <span class="p">=</span> <span class="s2">&quot;-bootdata:2#p0,e,b&quot;&quot;$etfsboot&quot;&quot;#pEF,e,b&quot;&quot;$efisys_noprompt&quot;&quot; -u1 -udfver102 &quot;&quot;$env:TEMP\sourceisotemp&quot;&quot; &quot;&quot;$UnattendedISOPath&quot;&quot;&quot;</span>
+
+<span class="nv">$ProcessingResult</span> <span class="p">=</span> <span class="nb">Start-Process</span> <span class="n">-FilePath</span> <span class="nv">$oscdimg</span> <span class="n">-ArgumentList</span> <span class="nv">$parameters</span> <span class="n">-Wait</span> <span class="n">-NoNewWindow</span> <span class="n">-PassThru</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nv">$ProcessingResult</span><span class="p">.</span><span class="n">ExitCode</span> <span class="o">-ne</span> <span class="n">0</span><span class="p">)</span> <span class="p">{</span>
+<span class="nb">Write-Host</span> <span class="n">-ForegroundColor</span> <span class="n">Yellow</span> <span class="s2">&quot;There was an error while creating the iso file.&quot;</span>
+<span class="p">}</span>
+<span class="k">else</span> <span class="p">{</span>
+<span class="nb">Write-Host</span> <span class="n">-ForegroundColor</span> <span class="n">Green</span> <span class="s2">&quot;The content of the ISO has been repackaged in the new ISO file.&quot;</span>
+<span class="p">}</span>
+
+<span class="c"># Cleaning up</span>
+<span class="nb">Remove-Item</span> <span class="n">-Path</span> <span class="s2">&quot;$env:TEMP\sourceisotemp&quot;</span> <span class="n">-Force</span> <span class="n">-Recurse</span> <span class="n">-Confirm</span><span class="p">:</span><span class="nv">$false</span>
+<span class="nb">Write-Host</span> <span class="n">-ForegroundColor</span> <span class="n">Green</span> <span class="s2">&quot;The temp folder has been removed.&quot;</span>
+
+<span class="c"># Dismount the ISO file as we no longer require it</span>
+<span class="nb">Dismount-DiskImage</span> <span class="n">-ImagePath</span> <span class="nv">$SourceISOFullPath</span>
+<span class="nb">Write-Host</span> <span class="n">-ForegroundColor</span> <span class="n">Green</span> <span class="s2">&quot;The source ISO file has been unmounted.&quot;</span>
+</code></pre></div></p>
+</li>
+<li>
+<p>As an administrator, open a PowerShell window cd to the dedicated folder containing the abovementioned PowerShell script and LiteTouch ISO, and run the following command:
+<div class="highlight"><pre><span></span><code><span class="p">.\</span><span class="n">Create-Unattended-ISO</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-SourceISOPath</span> <span class="p">.\</span><span class="n">LiteTouchPE_x64</span><span class="p">.</span><span class="n">iso</span> <span class="n">-UnattendedISOPath</span> <span class="p">.\</span><span class="n">LiteTouchPE_x64_NoPrompt</span><span class="p">.</span><span class="n">iso</span>
+</code></pre></div></p>
+</li>
+<li>
+<p>Upload the outputted <code>LiteTouchPE_x64_NoPrompt.iso</code> to vCentre and attach it to the CDROM drive for virtual machine <strong>WIN10TEMPL</strong>.</p>
+</li>
+</ol>
+<p>Now, each time <strong>WIN10TEMPL</strong> boots, LiteTouch will launch and it will automatically initiate the <strong>Deploy, Update &amp; Capture Windows 10</strong> task sequence. Because this is a non-persisted disk, VMware will automatically reset the hard drive back to its original empty state.</p>
+<p>Excellent! We’re almost done!</p>
+<p>The only step remaining is to create an Ansible Playbook that will power-on the virtual machine, wait MDT to shutdown WIN10TEMPL (once the capture process is complete). Then, Ansible will overwrite the <code>W10.wim</code> in the DeploymentShare with the latest capture. That’s it! That’s the magic sauce!</p>
+<p>I’ve used variables to make the playbook below reusable for Windows 10/11 and Windows Server 2016/2019/2022 captures. Just set the variables in Ansible Automation Platform:</p>
+<div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">​​---</span><span class="w"></span>
+<span class="l l-Scalar l-Scalar-Plain">- hosts</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">all</span><span class="w"></span>
+<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">gather_facts</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">no</span><span class="w"></span>
+<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">collections</span><span class="p p-Indicator">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">community.vmware</span><span class="w"></span>
+
+<span class="w w-Error">  </span><span class="nt">vars</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">hostname_var</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;{{</span><span class="nv"> </span><span class="s">lookup(&quot;env&quot;,</span><span class="nv"> </span><span class="s">&quot;VMWARE_HOST&quot;)</span><span class="nv"> </span><span class="s">}}&#39;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">username_var</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;{{</span><span class="nv"> </span><span class="s">lookup(&quot;env&quot;,</span><span class="nv"> </span><span class="s">&quot;VMWARE_USER&quot;)</span><span class="nv"> </span><span class="s">}}&#39;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">password_var</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;{{</span><span class="nv"> </span><span class="s">lookup(&quot;env&quot;,</span><span class="nv"> </span><span class="s">&quot;VMWARE_PASSWORD&quot;)</span><span class="nv"> </span><span class="s">}}&#39;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">datacenter_var</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">vSphere_Datacentre</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">name_var</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">vSphere_VM_Name</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+
+<span class="w">  </span><span class="nt">tasks</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">block</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Check Variable values</span><span class="w"></span>
+<span class="w">          </span><span class="nt">fail</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="nt">msg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">One or more of the variabled failed validation</span><span class="w"></span>
+<span class="w">          </span><span class="nt">when</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">&gt;</span><span class="w"></span>
+<span class="w">            </span><span class="no">- (mdt_capture_filepath | length == 0) or</span><span class="w"></span>
+<span class="w">              </span><span class="no">(mdt_capture_filepath == &quot;&quot;) or</span><span class="w"></span>
+<span class="w">              </span><span class="no">(mdt_image_filepath | length == 0) or</span><span class="w"></span>
+<span class="w">              </span><span class="no">(mdt_image_filepath == &quot;&quot;)</span><span class="w"></span>
+
+<span class="w">      </span><span class="nt">rescue</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">meta</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">end_play</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">##    Power on the non-persistant HD (first shutdown so that the HD is wiped)</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">block</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Power Off/Down template VM (which also wipes the HD)</span><span class="w"></span>
+<span class="w">          </span><span class="nt">vmware_guest_powerstate</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">hostname_var</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">username_var</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">password_var</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">name_var</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">powered-off</span><span class="w"></span>
+<span class="w">          </span><span class="nt">delegate_to</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">localhost</span><span class="w"></span>
+
+<span class="w">      </span><span class="nt">rescue</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Failed to power off {{ name_var }}</span><span class="w"></span>
+<span class="w">          </span><span class="nt">set_stats</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="nt">data</span><span class="p">:</span><span class="w"></span>
+<span class="w">              </span><span class="nt">ErrorCode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">b948b652-8017-4417-bac0-bd1304dca333</span><span class="w"></span>
+
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">meta</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">end_play</span><span class="w"></span>
+
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">block</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Power on the template VM (to auto-start OS installation)</span><span class="w"></span>
+<span class="w">          </span><span class="nt">vmware_guest</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">hostname_var</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">username_var</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">password_var</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="nt">datacenter</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">datacenter_var</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">name_var</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="nt">validate_certs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">            </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">poweredon</span><span class="w"></span>
+<span class="w">          </span><span class="nt">delegate_to</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">localhost</span><span class="w"></span>
+
+<span class="w">      </span><span class="nt">rescue</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Failed to power on the virtual machine</span><span class="w"></span>
+<span class="w">          </span><span class="nt">set_stats</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="nt">data</span><span class="p">:</span><span class="w"></span>
+<span class="w">              </span><span class="nt">ErrorCode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">72bbbb1f-e35b-44b8-befb-5891e59b6aeb</span><span class="w"></span>
+
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">meta</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">end_play</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">##    Wait for Windows to be installed and the WIM to be captured</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">block</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Wait for the MDT to finish installing Windows and capturing the Image.</span><span class="w"></span>
+<span class="w">          </span><span class="nt">vmware_guest_info</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">hostname_var</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">username_var</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">password_var</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="nt">datacenter</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">datacenter_var</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">name_var</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="nt">validate_certs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">          </span><span class="nt">register</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vmpoweredon</span><span class="w"></span>
+<span class="w">          </span><span class="nt">until</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vmpoweredon.instance.hw_power_status  == &quot;poweredOff&quot;</span><span class="w"></span>
+<span class="w">          </span><span class="nt">retries</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">24</span><span class="w"></span>
+<span class="w">          </span><span class="nt">delay</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">600</span><span class="w"></span>
+<span class="w">          </span><span class="nt">delegate_to</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">localhost</span><span class="w"></span>
+
+<span class="w">      </span><span class="nt">rescue</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Timeout - Machine {{ name_var }} did not finish installing and capturing within the expected allowance</span><span class="w"></span>
+<span class="w">          </span><span class="nt">set_stats</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="nt">data</span><span class="p">:</span><span class="w"></span>
+<span class="w">              </span><span class="nt">ErrorCode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">94a1a942-5eb9-442c-a479-aa64feb9ee25</span><span class="w"></span>
+
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">meta</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">end_play</span><span class="w"></span>
+
+
+<span class="w">    </span><span class="c1">##    Copy the captured WIM into the MDT folder. Then, delete the captured WIM</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">block</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Copy capture into the MDT folder (overwriting existing image)</span><span class="w"></span>
+<span class="w">          </span><span class="nt">win_copy</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="nt">src</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">mdt_capture_filepath</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="nt">dest</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">mdt_image_filepath</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="nt">remote_src</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">yes</span><span class="w"></span>
+<span class="w">            </span><span class="nt">force</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">yes</span><span class="w"></span>
+<span class="w">          </span><span class="nt">vars</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="nt">become</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">yes</span><span class="w"></span>
+<span class="w">            </span><span class="nt">become_method</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">runas</span><span class="w"></span>
+<span class="w">            </span><span class="nt">become_flags</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">logon_type=interactive logon_flags=with_profile</span><span class="w"></span>
+
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Delete capture from MDT Captures folder</span><span class="w"></span>
+<span class="w">          </span><span class="nt">win_file</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">mdt_capture_filepath</span><span class="nv"> </span><span class="s">}}&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">absent</span><span class="w"></span>
+<span class="w">          </span><span class="nt">vars</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="nt">become</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">yes</span><span class="w"></span>
+<span class="w">            </span><span class="nt">become_method</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">runas</span><span class="w"></span>
+<span class="w">            </span><span class="nt">become_flags</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">logon_type=interactive logon_flags=with_profile</span><span class="w"></span>
+
+<span class="w">      </span><span class="nt">rescue</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Failed to move/delete captured WIM</span><span class="w"></span>
+<span class="w">          </span><span class="nt">set_stats</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="nt">data</span><span class="p">:</span><span class="w"></span>
+<span class="w">              </span><span class="nt">ErrorCode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">f9b3cf87-6646-4663-a8c3-47282993017a</span><span class="w"></span>
+</code></pre></div>
+<h2 id="summary">Summary</h2>
+<p>Congratulations! You've reached the finish line! You can now create other Task Sequences focused on deployment, just make sure you select the same Operating System.</p>
+<p>As a recap of what this playbook does:</p>
+<ol>
+<li>Ansible will boot <strong>WIN10TEMPL</strong> which will launch LiteTouch (since the <code>LiteTouchPE_x64_NoPrompt.iso</code> is mounted to the CDROM drive). </li>
+<li>LiteTouch will install Windows, install the latest patches and updates from Microsoft, SysPrep and Capture the machine then shut it down. </li>
+<li>When Ansible detects <strong>WIN10TEMPL</strong> is shutdown, it will overwrite the golden image in MDT with the exported Capture so that any other Task Sequences you create in MDT (using the same Operating System) will have a recent image, patched the night before by Ansible.</li>
+</ol>
+<p>If you really want to be creative you could edit the playbook to archive MDT captures every 3 months for historical purposes.</p>
+<h2 id="having-problems">Having problems?</h2>
+<p>If you want to engage me to help you implement this, please <a href="https://www.linkedin.com/in/timothy-dilbert/">reach out to me via LinkedIn</a> or the BMT wesbite (<a href="https://www.bmt.ky">click here</a>).</p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href=".." class="md-footer__link md-footer__link--prev" aria-label="Previous: Welcome" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Welcome
+            </div>
+          </div>
+        </a>
+      
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      <small>Documentation provided by</small><br /><br /> <img src="/assets/bmt-logo-small-white.png" /> <p> PO Box 2056,<br /> Grand Cayman KY1-1105<br /> Cayman Islands<br /> <a href="https://www.bmt.ky">https://www.bmt.ky</a> </p>
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+      
+      
+    
+    <a href="https://github.com/bmtltd" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.annotate"], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d6c3db9e.min.js"></script>
+      
+    
+  </body>
+</html>
